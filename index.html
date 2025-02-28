@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Tecnologia e Educação 5.0</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <img src="controller-retro.png" alt="Retro Controller" class="header-img">
+        <h1>Portal Tecnologia e Educação 5.0</h1>
+        <div class="intro" id="intro">
+            <p>Bem-vindo ao portal que une tecnologia e educação! Aqui, você vai explorar formas especiais de aprender, pensar e criar com a Educação 5.0. O psicólogo Howard Gardner explica que a inteligência é múltipla, e você tem uma combinação única de habilidades para descobrir.</p>
+            <p><strong>🔎 Inicie sua jornada!</strong> Faça o teste, crie algo especial com tecnologia e avance até aprender a fazer NFTs.</p>
+            <h2>Quais são as inteligências múltiplas?</h2>
+            <ul>
+                <li><img src="https://img.icons8.com/emoji/20/000000/speech-balloon.png" alt="📝"> <strong>Linguística</strong> – Habilidade com palavras, escrita e comunicação. Você pode criar histórias, participar de conversas ou compartilhar ideias claras!</li>
+                <li><img src="https://img.icons8.com/emoji/20/000000/abacus.png" alt="🔢"> <strong>Lógico-Matemática</strong> – Facilidade com números, lógica e raciocínio. Bom para resolver problemas, planejar atividades ou entender padrões!</li>
+                <li><img src="https://img.icons8.com/emoji/20/000000/artist-palette.png" alt="🎨"> <strong>Espacial</strong> – Percepção visual e pensamento em imagens. Ótimo para imaginar lugares, desenhar ou fazer visuais únicos!</li>
+                <li><img src="https://img.icons8.com/emoji/20/000000/running.png" alt="🏃"> <strong>Corporal-Cinestésica</strong> – Coordenação e aprendizado pelo movimento. Use o corpo para dançar, construir ou expressar energia!</li>
+                <li><img src="https://img.icons8.com/emoji/20/000000/musical-note.png" alt="🎵"> <strong>Musical</strong> – Sensibilidade para sons, ritmos e melodias. Crie músicas, explore sons ou aprecie ritmos ao seu redor!</li>
+                <li><img src="https://img.icons8.com/emoji/20/000000/handshake.png" alt="🤝"> <strong>Interpessoal</strong> – Facilidade em entender e interagir com pessoas. Perfeito para colaborar, ajudar ou inspirar quem está por perto!</li>
+                <li><img src="https://img.icons8.com/emoji/20/000000/thinking-face.png" alt="🤔"> <strong>Intrapessoal</strong> – Autoconhecimento e reflexão sobre sentimentos. Excelente para explorar quem você é e planejar seus sonhos!</li>
+                <li><img src="https://img.icons8.com/emoji/20/000000/seedling.png" alt="🌱"> <strong>Naturalista</strong> – Conexão com a natureza e padrões. Ideal para observar o mundo, entender detalhes ou criar com inspiração natural!</li>
+            </ul>
+            <p><strong>➡ Está pronto para começar?</strong> Descubra suas habilidades e explore o mundo da tecnologia!</p>
+            <button onclick="startQuiz()">🎮 Nível 1: Descoberta</button>
+        </div>
+        
+        <div class="quiz" id="quiz-section" style="display: none;">
+            <h2>🎲 Nível 1: Teste de Inteligências</h2>
+            <p>Responda com 'Nunca' (1), 'Às vezes' (3) ou 'Sempre' (5):</p>
+            <div id="quiz-questions"></div>
+            <button onclick="submitQuiz()">🎯 Ver Resultado</button>
+        </div>
+        
+        <div class="result" id="result-section" style="display: none;">
+            <h2>🏆 Seu Perfil de Inteligências</h2>
+            <canvas id="resultsChart"></canvas>
+            <div id="quiz-result"></div>
+            <button onclick="goToLevel2()">⚔️ Nível 2: Criação</button>
+        </div>
+
+        <div class="creation" id="creation-section" style="display: none;">
+            <h2>🎨 Nível 2: Crie Seu NFT</h2>
+            <div id="creation-task"></div>
+            <button onclick="goToLevel3()">🚀 Nível 3: Mintagem</button>
+        </div>
+
+        <div class="minting" id="minting-section" style="display: none;">
+            <h2>⭐ Nível 3: Mintando Seu NFT</h2>
+            <p>Aqui você vai aprender a transformar sua criação em um NFT! Siga os passos:</p>
+            <ol>
+                <li>Conecte sua carteira MetaMask ao OpenSea.</li>
+                <li>Suba seu arquivo (imagem, áudio, etc.).</li>
+                <li>Configure o NFT e liste-o com Polygon (grátis!).</li>
+            </ol>
+            <p>Parabéns, você completou a jornada!</p>
+            <button onclick="restartPortal()">🔄 Recomeçar</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
