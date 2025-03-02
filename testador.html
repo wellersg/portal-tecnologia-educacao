@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testador de Arquivo - Workshop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Testador de Arquivo</h1>
+    </header>
+    <div class="container">
+        <h2>Teste seu Arquivo</h2>
+        <p>Suba seu arquivo aqui pra ver se tá pronto pro NFT!</p>
+        <label for="fileInput" class="file-label" aria-label="Escolher arquivo para testar">
+            <img src="icon-upload.png" alt="Ícone de upload" class="upload-icon"> Escolher Arquivo
+        </label>
+        <input type="file" id="fileInput" accept=".mp3,.wav,.png,.jpg,.jpeg,.mp4,.webm" onchange="checkFile()">
+        <div id="fileFeedback" aria-live="polite"></div>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn back-btn" role="button" tabindex="0" aria-label="Voltar para a página inicial">↩ Voltar</a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

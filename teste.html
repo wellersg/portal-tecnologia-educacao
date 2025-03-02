@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Inteligências - Workshop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Teste de Inteligências</h1>
+    </header>
+    <div class="container">
+        <div class="intro" id="intro">
+            <p>Aqui você vai descobrir suas inteligências múltiplas pra criar seu NFT!</p>
+            <h2>Quais são as inteligências? (Sob Gardner)</h2>
+            <ul class="inteligencias-list">
+                <li><img src="icon-linguistica.png" alt="Ícone de balão de fala" class="intel-icon"><span><strong>Linguística</strong> – Habilidade com palavras, escrita e comunicação.</span></li>
+                <li><img src="icon-logica.png" alt="Ícone de ábaco" class="intel-icon"><span><strong>Lógico-Matemática</strong> – Facilidade com números, lógica e raciocínio.</span></li>
+                <li><img src="icon-espacial.png" alt="Ícone de paleta" class="intel-icon"><span><strong>Espacial</strong> – Percepção visual e pensamento em imagens.</span></li>
+                <li><img src="icon-corporal.png" alt="Ícone de figura correndo" class="intel-icon"><span><strong>Corporal-Cinestésica</strong> – Coordenação e aprendizado pelo movimento.</span></li>
+                <li><img src="icon-musical.png" alt="Ícone de nota musical" class="intel-icon"><span><strong>Musical</strong> – Sensibilidade para sons, ritmos e melodias.</span></li>
+                <li><img src="icon-interpessoal.png" alt="Ícone de mãos se cumprimentando" class="intel-icon"><span><strong>Interpessoal</strong> – Facilidade em entender e interagir com pessoas.</span></li>
+                <li><img src="icon-intrapessoal.png" alt="Ícone de rosto pensante" class="intel-icon"><span><strong>Intrapessoal</strong> – Autoconhecimento e reflexão.</span></li>
+                <li><img src="icon-naturalista.png" alt="Ícone de broto de planta" class="intel-icon"><span><strong>Naturalista</strong> – Conexão com a natureza e padrões.</span></li>
+            </ul>
+            <button onclick="startQuiz()" class="btn back-btn" aria-label="Iniciar o teste de inteligências">🎮 Iniciar Teste</button>
+            <a href="sobre-gardner.html" class="btn back-btn" role="button" tabindex="0">📖 Saiba Mais sobre Gardner</a>
+        </div>
+        
+        <div class="quiz" id="quiz-section" style="display: none;">
+            <h2>🎲 Teste de Inteligências</h2>
+            <p>Responda com 'Nunca' (1), 'Às vezes' (3) ou 'Sempre' (5):</p>
+            <div id="quiz-questions"></div>
+            <button onclick="submitQuiz()" class="btn back-btn" aria-label="Ver resultados do teste">🎯 Ver Resultado</button>
+        </div>
+        
+        <div class="result" id="result-section" style="display: none;">
+            <h2>🏆 Seu Perfil de Inteligências</h2>
+            <canvas id="resultsChart" role="img" aria-label="Gráfico dos resultados do teste de inteligências"></canvas>
+            <div id="quiz-result" aria-live="polite"></div>
+            <div class="result-buttons">
+                <button onclick="shareResults()" class="share-btn" aria-label="Compartilhar meus resultados">📤 Compartilhar</button>
+                <a href="index.html" class="btn back-btn" role="button" tabindex="0">↩ Voltar</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

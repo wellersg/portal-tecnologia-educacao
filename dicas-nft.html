@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dicas para Seu NFT - Workshop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="controller-retro.png" alt="Controlador retrô 16 bits" class="header-img">
+        <h1>Dicas para Seu NFT</h1>
+    </header>
+    <div class="container">
+        <h2>Escolha Suas Inteligências</h2>
+        <p>Descobriu suas forças no <a href="teste.html">Teste de Inteligências Múltiplas</a>? Escolha uma ou mais pra ver dicas incríveis!</p>
+        <div class="intelligence-selection">
+            <label><input type="checkbox" name="intelligence" value="linguística"> Linguística</label>
+            <label><input type="checkbox" name="intelligence" value="lógico-matemática"> Lógico-Matemática</label>
+            <label><input type="checkbox" name="intelligence" value="espacial"> Espacial</label>
+            <label><input type="checkbox" name="intelligence" value="corporal-cinestésica"> Corporal-Cinestésica</label>
+            <label><input type="checkbox" name="intelligence" value="musical"> Musical</label>
+            <label><input type="checkbox" name="intelligence" value="interpessoal"> Interpessoal</label>
+            <label><input type="checkbox" name="intelligence" value="intrapessoal"> Intrapessoal</label>
+            <label><input type="checkbox" name="intelligence" value="naturalista"> Naturalista</label>
+        </div>
+        <button onclick="showNFTSuggestions()" class="btn" aria-label="Mostrar dicas para criar meu NFT">🎨 Mostrar Dicas</button>
+        <ul class="inteligencias-list" id="nft-suggestions" aria-live="polite"></ul>
+        <div class="nav-buttons">
+            <a href="criar-nft.html" class="btn back-btn" role="button" tabindex="0">↩ Voltar</a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -34,20 +34,18 @@ const questions = [
 ];
 
 let chartInstance = null;
-let userScores = {};
+let userScores = JSON.parse(localStorage.getItem('userScores')) || {};
 
 function startQuiz() {
     document.getElementById("intro").style.display = "none";
     document.getElementById("quiz-section").style.display = "block";
     let quizHtml = "";
     questions.forEach((q, index) => {
-        quizHtml += `
-            <p>${index + 1}. ${q.text}</p>
-            <input type="radio" name="q${index}" value="1"> Nunca
-            <input type="radio" name="q${index}" value="3"> Às vezes
-            <input type="radio" name="q${index}" value="5"> Sempre
-            <br><br>
-        `;
+        quizHtml += `<p>${index + 1}. ${q.text}</p>` +
+                    `<label><input type="radio" name="q${index}" value="1"> Nunca</label>` +
+                    `<label><input type="radio" name="q${index}" value="3"> Às vezes</label>` +
+                    `<label><input type="radio" name="q${index}" value="5"> Sempre</label>` +
+                    `<br><br>`;
     });
     document.getElementById("quiz-questions").innerHTML = quizHtml;
 }
@@ -63,6 +61,8 @@ function submitQuiz() {
             userScores[q.type] += parseInt(selected.value);
         }
     });
+
+    localStorage.setItem('userScores', JSON.stringify(userScores));
 
     document.getElementById("quiz-section").style.display = "none";
     document.getElementById("result-section").style.display = "block";
@@ -83,56 +83,62 @@ function submitQuiz() {
             }]
         },
         options: {
-            scales: {
-                y: { beginAtZero: true, max: 20 }
-            }
+            scales: { y: { beginAtZero: true, max: 20 } }
         }
     });
 
-    let resultText = "<h3>Parabéns, Explorador de Inteligências!</h3><p>Veja como suas habilidades se destacam:</p>";
+    let resultText = "<h3>Parabéns, Explorador!</h3><p>Veja como suas habilidades se destacam:</p>";
     for (let type in userScores) {
         if (userScores[type] >= 15) {
             resultText += `<p><strong>${type} (${userScores[type]}/20):</strong><br>`;
             if (type === "linguística") {
-                resultText += "Você tem uma habilidade especial para expressar ideias e usar palavras! Experimente criar histórias ou poemas que inspirem.<br>";
-                resultText += "No dia a dia, tente escrever um diário ou conversar com amigos para desenvolver essa capacidade.<br>";
-                resultText += "Se quiser estudar mais, áreas como Letras ou Comunicação podem te interessar.<br>";
-                resultText += "E, se for seu caminho, profissões como escritor ou professor podem ser ótimas escolhas!";
+                resultText += "Você tem uma habilidade especial para expressar ideias e usar palavras! Experimente criar histórias ou poemas que inspirem.<br>" +
+                              "No dia a dia, tente escrever um diário ou conversar com amigos para desenvolver essa capacidade.<br>" +
+                              "Se quiser estudar mais, áreas como Letras ou Comunicação podem te interessar.<br>" +
+                              "E, se for seu caminho, profissões como escritor ou professor podem ser ótimas escolhas!<br>" +
+                              "Pra seu NFT, use isso pra criar um texto ou áudio incrível!";
             } else if (type === "lógico-matemática") {
-                resultText += "Sua mente lógica é excelente para resolver problemas! Explore isso com jogos ou desafios que estimulem o raciocínio.<br>";
-                resultText += "No dia a dia, experimente planejar atividades ou analisar situações com cuidado.<br>";
-                resultText += "Cursos como Matemática ou Ciências Exatas podem abrir novas possibilidades.<br>";
-                resultText += "Se te interessar, profissões como cientista ou engenheiro podem combinar com você!";
+                resultText += "Sua mente lógica é excelente para resolver problemas! Explore isso com jogos ou desafios que estimulem o raciocínio.<br>" +
+                              "No dia a dia, experimente planejar atividades ou analisar situações com cuidado.<br>" +
+                              "Cursos como Matemática ou Ciências Exatas podem abrir novas possibilidades.<br>" +
+                              "Se te interessar, profissões como cientista ou engenheiro podem combinar com você!<br>" +
+                              "Use essa lógica pra criar um NFT com padrões ou designs únicos!";
             } else if (type === "espacial") {
-                resultText += "Você tem um talento especial para visualizar e criar! Use sua imaginação para fazer desenhos ou imaginar cenários.<br>";
-                resultText += "No dia a dia, tente criar mapas, montar objetos ou decorar algo ao seu redor.<br>";
-                resultText += "Estudos em Design ou Arquitetura podem ser um espaço para explorar.<br>";
-                resultText += "E, se quiser, profissões como artista ou designer podem ser seu futuro!";
+                resultText += "Você tem um talento especial para visualizar e criar! Use sua imaginação para fazer desenhos ou imaginar cenários.<br>" +
+                              "No dia a dia, tente criar mapas, montar objetos ou decorar algo ao seu redor.<br>" +
+                              "Estudos em Design ou Arquitetura podem ser um espaço para explorar.<br>" +
+                              "E, se for seu caminho, profissões como artista ou designer podem ser seu futuro!<br>" +
+                              "Crie um NFT visual que impressione!";
             } else if (type === "corporal-cinestésica") {
-                resultText += "Seu corpo é sua força – você aprende melhor em movimento! Experimente dançar, praticar esportes ou criar com as mãos.<br>";
-                resultText += "No dia a dia, tente cozinhar ou construir algo para usar essa energia.<br>";
-                resultText += "Cursos como Educação Física ou Artesanato podem te ajudar a crescer.<br>";
-                resultText += "Se te atrair, profissões como atleta ou artesão podem ser perfeitas!";
+                resultText += "Seu corpo é sua força – você aprende melhor em movimento! Experimente dançar, praticar esportes ou criar com as mãos.<br>" +
+                              "No dia a dia, tente cozinhar ou construir algo para usar essa energia.<br>" +
+                              "Cursos como Educação Física ou Artesanato podem te ajudar a crescer.<br>" +
+                              "Se te atrair, profissões como atleta ou artesão podem ser perfeitas!<br>" +
+                              "Seu NFT pode ser algo físico digitalizado, como uma dança!";
             } else if (type === "musical") {
-                resultText += "Você tem uma conexão especial com sons! Experimente tocar, cantar ou criar músicas que mostrem quem você é.<br>";
-                resultText += "No dia a dia, ouça diferentes sons ou crie ritmos para explorar essa habilidade.<br>";
-                resultText += "Estudos em Música ou Artes podem te levar mais longe.<br>";
-                resultText += "E, se quiser, ser músico ou professor de música pode ser uma boa escolha!";
+                resultText += "Você tem uma conexão especial com sons! Experimente tocar, cantar ou criar músicas que mostrem quem você é.<br>" +
+                              "No dia a dia, ouça diferentes sons ou crie ritmos para explorar essa habilidade.<br>" +
+                              "Estudos em Música ou Artes podem te levar mais longe.<br>" +
+                              "E, se quiser, ser músico ou professor de música pode ser uma boa escolha!<br>" +
+                              "Que tal um NFT com uma batida original sua?";
             } else if (type === "interpessoal") {
-                resultText += "Você tem um talento especial para entender pessoas! Use isso para criar laços e ajudar quem está ao seu redor.<br>";
-                resultText += "No dia a dia, experimente apoiar amigos ou trabalhar em grupo para fortalecer essa habilidade.<br>";
-                resultText += "Cursos como Psicologia ou Comunicação podem te interessar.<br>";
-                resultText += "Se for seu caminho, profissões como mediador ou líder podem surgir daí!";
+                resultText += "Você tem um talento especial para entender pessoas! Use isso para criar laços e ajudar quem está ao seu redor.<br>" +
+                              "No dia a dia, experimente apoiar amigos ou trabalhar em grupo para fortalecer essa habilidade.<br>" +
+                              "Cursos como Psicologia ou Comunicação podem te interessar.<br>" +
+                              "Se for seu caminho, profissões como mediador ou líder podem surgir daí!<br>" +
+                              "Crie um NFT colaborativo com amigos!";
             } else if (type === "intrapessoal") {
-                resultText += "Você tem uma habilidade especial para se entender! Reflita sobre seus sentimentos e sonhos para se conhecer ainda mais.<br>";
-                resultText += "No dia a dia, tente escrever suas ideias ou pensar em silêncio para explorar essa capacidade.<br>";
-                resultText += "Estudos em Filosofia ou Psicologia podem te ajudar a avançar.<br>";
-                resultText += "E, se te atrair, profissões como escritor ou terapeuta podem ser ideais!";
+                resultText += "Você tem uma habilidade especial para se entender! Reflita sobre seus sentimentos e sonhos para se conhecer ainda mais.<br>" +
+                              "No dia a dia, tente escrever suas ideias ou pensar em silêncio para explorar essa capacidade.<br>" +
+                              "Estudos em Filosofia ou Psicologia podem te ajudar a avançar.<br>" +
+                              "E, se te atrair, profissões como escritor ou terapeuta podem ser ideais!<br>" +
+                              "Seu NFT pode ser algo bem pessoal e único!";
             } else if (type === "naturalista") {
-                resultText += "Você tem uma conexão especial com a natureza! Explore o mundo ao seu redor observando padrões e detalhes.<br>";
-                resultText += "No dia a dia, tente observar plantas, animais ou organizar coleções para usar essa habilidade.<br>";
-                resultText += "Cursos como Biologia ou Ciências Ambientais podem te conectar mais.<br>";
-                resultText += "Se quiser, profissões como ecologista ou pesquisador podem ser seu futuro!";
+                resultText += "Você tem uma conexão especial com a natureza! Explore o mundo ao seu redor observando padrões e detalhes.<br>" +
+                              "No dia a dia, tente observar plantas, animais ou organizar coleções para usar essa habilidade.<br>" +
+                              "Cursos como Biologia ou Ciências Ambientais podem te conectar mais.<br>" +
+                              "Se quiser, profissões como ecologista ou pesquisador podem ser seu futuro!<br>" +
+                              "Use a natureza como inspiração pro seu NFT!";
             }
             resultText += "</p>";
         }
@@ -140,69 +146,121 @@ function submitQuiz() {
     document.getElementById("quiz-result").innerHTML = resultText;
 }
 
-function goToLevel2() {
-    document.getElementById("result-section").style.display = "none";
-    document.getElementById("creation-section").style.display = "block";
-    let creationText = "<p><strong>Parabéns, Criador de NFT!</strong> Use suas habilidades para fazer uma criação especial na Educação 5.0:</p>";
+function shareResults() {
+    const resultText = document.getElementById("quiz-result").innerText;
+    const shareMessage = "Confira meu perfil de inteligências do Workshop Tecnologia e Educação 5.0:\n" + resultText + "\nAcesse: https://wellersg.github.io/portal-tecnologia-educacao/";
+    
+    if (navigator.share) {
+        navigator.share({
+            title: "Meu Perfil de Inteligências",
+            text: shareMessage,
+            url: "https://wellersg.github.io/portal-tecnologia-educacao/"
+        }).catch(error => console.log("Erro ao compartilhar:", error));
+    } else {
+        navigator.clipboard.writeText(shareMessage).then(() => {
+            alert("Resultados copiados! Cole em um e-mail ou rede social.");
+            window.location.href = "mailto:?subject=Meu Perfil de Inteligências&body=" + encodeURIComponent(shareMessage);
+        }).catch(error => console.log("Erro ao copiar:", error));
+    }
+}
+
+function checkFile() {
+    const fileInput = document.getElementById("fileInput");
+    const fileFeedback = document.getElementById("fileFeedback");
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        fileFeedback.innerText = "Nenhum arquivo selecionado!";
+        return;
+    }
+
+    const maxSize = 100 * 1024 * 1024; // 100 MB
+    const acceptedTypes = ["audio/mpeg", "audio/wav", "image/png", "image/jpeg", "video/mp4", "video/webm"];
+    
+    if (file.size > maxSize) {
+        fileFeedback.innerText = `Arquivo muito grande (${(file.size / 1024 / 1024).toFixed(2)} MB). Máximo é 100 MB!`;
+        return;
+    }
+
+    if (!acceptedTypes.includes(file.type)) {
+        fileFeedback.innerText = `Formato não aceito (${file.type}). Use MP3, WAV, PNG, JPG, MP4 ou WEBM!`;
+        return;
+    }
+
+    fileFeedback.innerText = `Arquivo ok pra mintar! (${file.name}, ${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+}
+
+function loadIntelligenceSelection() {
+    const selectionDiv = document.getElementById("intelligence-selection");
+    if (!selectionDiv) return;
+
+    let selectionHtml = "";
     for (let type in userScores) {
         if (userScores[type] >= 15) {
-            creationText += `<p><strong>${type}:</strong><br>`;
-            if (type === "linguística") {
-                creationText += "- Poema: Escreva versos que inspirem (use um editor de texto).<br>";
-                creationText += "- Conto: Faça uma história curta que motive (Canva ou Word).<br>";
-                creationText += "- História em Quadrinhos: Desenhe ou crie uma HQ digital (Canva).<br>";
-                creationText += "- Discurso Gravado: Grave sua voz com uma mensagem especial (use o celular).";
-            } else if (type === "lógico-matemática") {
-                creationText += "- Padrão Geométrico: Desenhe formas que se repetem (Paint ou Canva).<br>";
-                creationText += "- Quebra-Cabeça Digital: Crie um desafio visual (Photopea online).<br>";
-                creationText += "- Infográfico: Faça um gráfico simples com informações (Canva).<br>";
-                creationText += "- Arte Algorítmica: Use lógica para criar algo diferente (Processing online).";
-            } else if (type === "espacial") {
-                creationText += "- Desenho: Faça uma ilustração criativa (Paint ou papel digitalizado).<br>";
-                creationText += "- Modelo 3D: Crie algo em 3D (Blender ou TinkerCAD online).<br>";
-                creationText += "- Mapa Imaginário: Desenhe um lugar inventado (Canva ou papel).<br>";
-                creationText += "- Colagem Digital: Combine imagens num design único (Canva).";
-            } else if (type === "corporal-cinestésica") {
-                creationText += "- Vídeo de Dança: Grave um movimento seu (celular ou câmera).<br>";
-                creationText += "- Foto de Escultura: Faça algo com argila ou materiais simples e fotografe.<br>";
-                creationText += "- Tutorial de Movimento: Filme você ensinando um gesto ou passo.<br>";
-                creationText += "- Artesanato: Crie um objeto físico e tire uma foto (ex.: origami).";
-            } else if (type === "musical") {
-                creationText += "- Batida: Faça um ritmo simples (Audacity ou GarageBand).<br>";
-                creationText += "- Melodia: Crie uma música curta (app ou instrumento).<br>";
-                creationText += "- Poema Musicado: Grave sua voz com um som de fundo (celular).<br>";
-                creationText += "- Som Ambiente: Capte sons do dia a dia (natureza, rua).";
-            } else if (type === "interpessoal") {
-                creationText += "- Arte Colaborativa: Faça um desenho ou foto com amigos.<br>";
-                creationText += "- Entrevista em Áudio: Grave uma conversa com alguém (celular).<br>";
-                creationText += "- Storyboard de Grupo: Crie um plano visual com outras pessoas (Canva).<br>";
-                creationText += "- Mapa de Relações: Desenhe conexões entre pessoas (papel ou digital).";
-            } else if (type === "intrapessoal") {
-                creationText += "- Autorretrato: Desenhe ou fotografe algo que te represente.<br>";
-                creationText += "- Diário Visual: Crie uma página ilustrada dos seus pensamentos (Canva).<br>";
-                creationText += "- Mandala Pessoal: Faça um desenho circular com seus sentimentos.<br>";
-                creationText += "- Reflexão em Texto: Escreva algo profundo sobre você (editor de texto).";
-            } else if (type === "naturalista") {
-                creationText += "- Foto de Natureza: Capture uma planta ou animal (celular).<br>";
-                creationText += "- Desenho Ecológico: Faça um esboço de algo natural (papel ou digital).<br>";
-                creationText += "- Receita Fitoterápica: Crie um remédio natural como um chá ('Fitoterápico é um remédio feito de plantas, como chá de camomila para relaxar!') e escreva ou fotografe.<br>";
-                creationText += "- Guia de Observação: Faça um registro visual ou escrito da natureza.";
-            }
-            creationText += "</p>";
+            selectionHtml += `<label><input type="checkbox" name="intelligence" value="${type}"> ${type} (${userScores[type]}/20)</label>`;
         }
     }
-    creationText += "<p>Crie seu arquivo (imagem, áudio, vídeo ou texto) e avance para o próximo nível!</p>";
-    document.getElementById("creation-task").innerHTML = creationText;
+    selectionDiv.innerHTML = selectionHtml;
 }
 
-function goToLevel3() {
-    document.getElementById("creation-section").style.display = "none";
-    document.getElementById("minting-section").style.display = "block";
+function showNFTSuggestions() {
+    const selectedIntelligences = Array.from(document.querySelectorAll("input[name='intelligence']:checked")).map(cb => cb.value);
+    const suggestionsList = document.getElementById("nft-suggestions");
+    
+    if (selectedIntelligences.length === 0) {
+        suggestionsList.innerHTML = "<li>Selecione pelo menos uma inteligência pra ver as dicas!</li>";
+        return;
+    }
+
+    let suggestionsHtml = "";
+    selectedIntelligences.forEach(type => {
+        suggestionsHtml += `<li><strong>${type}:</strong><ul>`;
+        if (type === "linguística") {
+            suggestionsHtml += `<li>Poema Visual: Escreva um poema curto e transforme em arte digital com fontes criativas (Canva). <a href="guias-criacao.html#linguistica-poema">Saiba Mais</a></li>` +
+                               `<li>Conto Ilustrado: Crie uma micro-história com desenhos simples ou fotos (celular ou Paint). <a href="guias-criacao.html#linguistica-conto">Saiba Mais</a></li>` +
+                               `<li>HQ Narrativa: Desenhe uma história em quadrinhos com diálogos impactantes (papel ou Canva). <a href="guias-criacao.html#linguistica-hq">Saiba Mais</a></li>` +
+                               `<li>Spoken Word: Grave um poema falado com fundo musical pra virar um NFT sonoro (celular + app de edição). <a href="guias-criacao.html#linguistica-spoken">Saiba Mais</a></li>`;
+        } else if (type === "lógico-matemática") {
+            suggestionsHtml += `<li>Arte Geométrica: Desenhe padrões simétricos ou fractais coloridos (Paint ou Canva). <a href="guias-criacao.html#logico-arte">Saiba Mais</a></li>` +
+                               `<li>Puzzle Interativo: Crie um quebra-cabeça digital que revele uma imagem (Photopea ou papel escaneado). <a href="guias-criacao.html#logico-puzzle">Saiba Mais</a></li>` +
+                               `<li>Infográfico Animado: Faça um gráfico simples com movimento (Canva ou vídeo no celular). <a href="guias-criacao.html#logico-infografico">Saiba Mais</a></li>` +
+                               `<li>Escultura Lógica: Monte uma estrutura 3D com formas encaixadas e fotografe (papel ou materiais reciclados). <a href="guias-criacao.html#logico-escultura">Saiba Mais</a></li>`;
+        } else if (type === "espacial") {
+            suggestionsHtml += `<li>Ilustração Fantástica: Desenhe um cenário imaginário com detalhes únicos (Paint ou papel). <a href="guias-criacao.html#espacial-ilustracao">Saiba Mais</a></li>` +
+                               `<li>Miniatura 3D: Crie um modelo físico ou digital de um objeto surreal (argila ou TinkerCAD). <a href="guias-criacao.html#espacial-miniatura">Saiba Mais</a></li>` +
+                               `<li>Mapa Artístico: Faça um mapa de um mundo fictício com cores vibrantes (Canva ou papel). <a href="guias-criacao.html#espacial-mapa">Saiba Mais</a></li>` +
+                               `<li>Colagem Visionária: Combine fotos e desenhos num design futurista (Canva ou celular). <a href="guias-criacao.html#espacial-colagem">Saiba Mais</a></li>`;
+        } else if (type === "corporal-cinestésica") {
+            suggestionsHtml += `<li>Dança Digital: Filme uma coreografia curta e edite com efeitos (celular + app de vídeo). <a href="guias-criacao.html#corporal-danca">Saiba Mais</a></li>` +
+                               `<li>Escultura Viva: Modele uma forma com argila ou massa e fotografe em ângulos dinâmicos. <a href="guias-criacao.html#corporal-escultura">Saiba Mais</a></li>` +
+                               `<li>Performance em Stop-Motion: Crie uma sequência de fotos em movimento (celular). <a href="guias-criacao.html#corporal-stopmotion">Saiba Mais</a></li>` +
+                               `<li>Arte Tátil: Faça um relevo com materiais reciclados e digitalize como NFT (papelão ou tecido). <a href="guias-criacao.html#corporal-tatil">Saiba Mais</a></li>`;
+        } else if (type === "musical") {
+            suggestionsHtml += `<li>Batida Original: Crie um loop rítmico com sons do dia a dia (Audacity ou celular). <a href="guias-criacao.html#musical-batida">Saiba Mais</a></li>` +
+                               `<li>Melodia Visual: Grave uma música e faça um vídeo com formas que dançam no ritmo (Canva + app de vídeo). <a href="guias-criacao.html#musical-melodia">Saiba Mais</a></li>` +
+                               `<li>Poesia Sonora: Combine poesia falada com camadas de sons ambientes (celular). <a href="guias-criacao.html#musical-poesia">Saiba Mais</a></li>` +
+                               `<li>Paisagem Acústica: Monte uma trilha com sons da natureza ou cidade (gravador ou app). <a href="guias-criacao.html#musical-paisagem">Saiba Mais</a></li>`;
+        } else if (type === "interpessoal") {
+            suggestionsHtml += `<li>Mural Coletivo: Crie uma arte digital ou física com amigos, cada um adicionando algo (Canva ou papel). <a href="guias-criacao.html#interpessoal-mural">Saiba Mais</a></li>` +
+                               `<li>Narrativa em Camadas: Grave um vídeo ou áudio com várias vozes contando uma história (celular). <a href="guias-criacao.html#interpessoal-narrativa">Saiba Mais</a></li>` +
+                               `<li>Galeria de Retratos: Desenhe ou fotografe expressões de pessoas próximas num collage (Paint ou Canva). <a href="guias-criacao.html#interpessoal-galeria">Saiba Mais</a></li>` +
+                               `<li>Teatro Digital: Filme uma cena curta com amigos pra virar um NFT animado (celular). <a href="guias-criacao.html#interpessoal-teatro">Saiba Mais</a></li>`;
+        } else if (type === "intrapessoal") {
+            suggestionsHtml += `<li>Autorretrato Emocional: Desenhe ou fotografe algo que revele um sentimento seu (Paint ou celular). <a href="guias-criacao.html#intrapessoal-autorretrato">Saiba Mais</a></li>` +
+                               `<li>Diário em Camadas: Crie uma página com texto e imagens sobre seus pensamentos (Canva). <a href="guias-criacao.html#intrapessoal-diario">Saiba Mais</a></li>` +
+                               `<li>Mandala Digital: Desenhe uma mandala com cores que expressem você (Canva ou papel escaneado). <a href="guias-criacao.html#intrapessoal-mandala">Saiba Mais</a></li>` +
+                               `<li>Reflexão Animada: Faça um vídeo curto com texto ou voz sobre sua jornada (celular + app). <a href="guias-criacao.html#intrapessoal-reflexao">Saiba Mais</a></li>`;
+        } else if (type === "naturalista") {
+            suggestionsHtml += `<li>Paisagem Viva: Fotografe ou desenhe uma cena natural com um toque surreal (celular ou Paint). <a href="guias-criacao.html#naturalista-paisagem">Saiba Mais</a></li>` +
+                               `<li>Escultura Orgânica: Crie uma forma com elementos naturais (folhas, pedras) e fotografe. <a href="guias-criacao.html#naturalista-escultura">Saiba Mais</a></li>` +
+                               `<li>Padrão Botânico: Desenhe repetições de folhas ou flores em estilo abstrato (Canva ou papel). <a href="guias-criacao.html#naturalista-padrao">Saiba Mais</a></li>` +
+                               `<li>História da Natureza: Faça um stop-motion com elementos naturais (celular). <a href="guias-criacao.html#naturalista-historia">Saiba Mais</a></li>`;
+        }
+        suggestionsHtml += `</ul></li>`;
+    });
+    suggestionsList.innerHTML = suggestionsHtml;
 }
 
-function restartPortal() {
-    document.getElementById("minting-section").style.display = "none";
-    document.getElementById("intro").style.display = "block";
-    if (chartInstance) chartInstance.destroy();
-    userScores = {};
+if (document.getElementById("intelligence-selection") && window.location.pathname.includes("criar-nft.html")) {
+    loadIntelligenceSelection();
 }
