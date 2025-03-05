@@ -17,7 +17,25 @@
             <div class="tutorial-item">
                 <h3>Configurando a Metamask</h3>
                 <p>Crie sua carteira digital pra entrar no mundo dos NFTs:</p>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/sample-metamask" frameborder="0" allowfullscreen aria-label="Vídeo tutorial sobre configuração da Metamask"></iframe>
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/_UGLa6lLxrI" frameborder="0" allowfullscreen aria-label="Vídeo tutorial sobre configuração da Metamask"></iframe>
+                <div class="tutorial-description">
+                    <h4>Informações Importantes</h4>
+                    <p>Guarde em um local seguro sua frase-semente (12 palavras), de preferência fora do seu computador.</p>
+                    <p>Adicione a Rede Polygon: (A rede Polygon oferece taxas de transação mais baratas para mintar NFTs.)</p>
+                    <ol>
+                        <li>Vá em "Redes" > "Add Network" e configure:</li>
+                        <ul>
+                            <li><strong>Nome:</strong> Polygon Mainnet</li>
+                            <li><strong>RPC URL:</strong> https://polygon-rpc.com/</li>
+                            <li><strong>Chain ID:</strong> 137</li>
+                            <li><strong>Símbolo:</strong> MATIC</li>
+                            <li><strong>Explorer:</strong> https://polygonscan.com/</li>
+                        </ul>
+                        <li>Salve e mude para a rede Polygon.</li>
+                    </ol>
+                    <button class="btn copy-btn" onclick="copyDescription()" aria-label="Copiar a descrição do tutorial">📋 Copiar Descrição</button>
+                    <div id="copyMessage" class="message" role="alert" aria-live="polite"></div>
+                </div>
             </div>
             <div class="tutorial-item">
                 <h3>Mintando no OpenSea</h3>
@@ -29,5 +47,24 @@
             <a href="index.html" class="btn back-btn" role="button" tabindex="0" aria-label="Voltar para a página inicial">↩ Voltar</a>
         </div>
     </div>
-</body>
+    <script src="script.js"></script>
+    <script>
+        function copyDescription() {
+            const description = document.querySelector('.tutorial-description h4').textContent +
+                              "\n" + document.querySelector('.tutorial-description p:nth-child(2)').textContent +
+                              "\n" + document.querySelector('.tutorial-description p:nth-child(3)').textContent +
+                              "\n" + document.querySelector('.tutorial-description ol').innerText;
+            navigator.clipboard.writeText(description).then(() => {
+                const copyMessage = document.getElementById("copyMessage");
+                copyMessage.innerText = "Descrição copiada com sucesso!";
+                setTimeout(() => {
+                    copyMessage.innerText = "";
+                }, 2000); // Remove a mensagem após 2 segundos
+            }).catch(err => {
+                console.error("Erro ao copiar:", err);
+                document.getElementById("copyMessage").innerText = "Erro ao copiar a descrição.";
+            });
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f1ead6766',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

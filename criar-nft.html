@@ -13,13 +13,55 @@
     <div class="container">
         <h2>Crie Seu NFT</h2>
         <p class="intro-text">Descubra suas habilidades e crie um NFT incrível!</p>
-        <a href="teste.html" class="btn test-btn" role="button" tabindex="0">🎮 Teste de Inteligências Múltiplas</a>
-        <p>Fez o teste? Confira dicas pra criar seu NFT!</p>
-        <a href="dicas-nft.html" class="btn" role="button" tabindex="0">🎨 Ver as Dicas</a>
+        <p>Para este passo, é essencial que você já tenha explorado suas inteligências múltiplas no teste! Confirme que completou o teste para desbloquear as dicas incríveis de criação de NFTs.</p>
+        <label>
+            <input type="checkbox" id="confirmTest" onchange="toggleDicasButton()"> Já fiz o teste de inteligências
+        </label>
+        <button id="dicasButton" class="btn" onclick="goToDicas()" disabled aria-label="Ver as dicas de criação de NFT">🎨 Ver as Dicas</button>
+        <div id="message" class="message" role="alert" aria-live="polite"></div>
         <div class="nav-buttons">
             <a href="index.html" class="btn back-btn" role="button" tabindex="0">↩ Voltar</a>
         </div>
     </div>
     <script src="script.js"></script>
-</body>
+    <script>
+        function toggleDicasButton() {
+            const confirmTest = document.getElementById("confirmTest");
+            const dicasButton = document.getElementById("dicasButton");
+            const message = document.getElementById("message");
+            dicasButton.disabled = !confirmTest.checked;
+            if (confirmTest.checked) {
+                message.innerText = ""; // Limpa a mensagem quando marcado
+            }
+            console.log("Checkbox state changed, checked:", confirmTest.checked); // Depuração
+        }
+
+        function goToDicas() {
+            const confirmTest = document.getElementById("confirmTest");
+            const message = document.getElementById("message");
+            console.log("Dicas button clicked, checked:", confirmTest.checked); // Depuração
+            if (!confirmTest.checked) {
+                message.style.display = "block"; // Garante que o elemento seja visível
+                message.innerText = "Por favor, confirme que você fez o teste de inteligências antes de prosseguir!";
+                setTimeout(() => {
+                    message.style.opacity = "1"; // Força a visibilidade
+                }, 10);
+                return; // Impede o redirecionamento
+            }
+            window.location.href = "dicas-nft.html";
+        }
+
+        // Desativa temporariamente o script do Cloudflare para teste local
+        if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+            console.log("Desativando script do Cloudflare para ambiente local.");
+            const scripts = document.getElementsByTagName('script');
+            for (let script of scripts) {
+                if (script.innerHTML.includes('__CF$cv$params')) {
+                    script.remove();
+                    break;
+                }
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f1a21bfa8',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

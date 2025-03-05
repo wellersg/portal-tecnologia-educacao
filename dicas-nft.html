@@ -8,28 +8,123 @@
 </head>
 <body>
     <header>
-        <img src="controller-retro.png" alt="Controlador retrô 16 bits" class="header-img">
         <h1>Dicas para Seu NFT</h1>
     </header>
     <div class="container">
         <h2>Escolha Suas Inteligências</h2>
-        <p>Descobriu suas forças no <a href="teste.html">Teste de Inteligências Múltiplas</a>? Escolha uma ou mais pra ver dicas incríveis!</p>
-        <div class="intelligence-selection">
-            <label><input type="checkbox" name="intelligence" value="linguística"> Linguística</label>
-            <label><input type="checkbox" name="intelligence" value="lógico-matemática"> Lógico-Matemática</label>
-            <label><input type="checkbox" name="intelligence" value="espacial"> Espacial</label>
-            <label><input type="checkbox" name="intelligence" value="corporal-cinestésica"> Corporal-Cinestésica</label>
-            <label><input type="checkbox" name="intelligence" value="musical"> Musical</label>
-            <label><input type="checkbox" name="intelligence" value="interpessoal"> Interpessoal</label>
-            <label><input type="checkbox" name="intelligence" value="intrapessoal"> Intrapessoal</label>
-            <label><input type="checkbox" name="intelligence" value="naturalista"> Naturalista</label>
+        <p>Descobriu suas forças no <a href="teste.html" aria-label="Ir para o Teste de Inteligências Múltiplas">Teste de Inteligências Múltiplas</a>? Escolha uma ou mais pra ver dicas incríveis!</p>
+        <div class="intelligence-selection" id="intelligence-selection" role="radiogroup" aria-label="Selecione suas inteligências múltiplas">
+            <label class="intel-option" tabindex="0">
+                <input type="checkbox" name="intelligence" value="linguística" aria-label="Selecionar inteligência linguística">
+                <img src="icon-linguistica.png" alt="Ícone representando a inteligência linguística (balão de fala)" class="intel-icon">
+                <span>Linguística</span>
+            </label>
+            <label class="intel-option" tabindex="0">
+                <input type="checkbox" name="intelligence" value="lógico-matemática" aria-label="Selecionar inteligência lógico-matemática">
+                <img src="icon-logica.png" alt="Ícone representando a inteligência lógico-matemática (ábaco)" class="intel-icon">
+                <span>Lógico-Matemática</span>
+            </label>
+            <label class="intel-option" tabindex="0">
+                <input type="checkbox" name="intelligence" value="espacial" aria-label="Selecionar inteligência espacial">
+                <img src="icon-espacial.png" alt="Ícone representando a inteligência espacial (paleta)" class="intel-icon">
+                <span>Espacial</span>
+            </label>
+            <label class="intel-option" tabindex="0">
+                <input type="checkbox" name="intelligence" value="corporal-cinestésica" aria-label="Selecionar inteligência corporal-cinestésica">
+                <img src="icon-corporal.png" alt="Ícone representando a inteligência corporal-cinestésica (figura correndo)" class="intel-icon">
+                <span>Corporal-Cinestésica</span>
+            </label>
+            <label class="intel-option" tabindex="0">
+                <input type="checkbox" name="intelligence" value="musical" aria-label="Selecionar inteligência musical">
+                <img src="icon-musical.png" alt="Ícone representando a inteligência musical (nota musical)" class="intel-icon">
+                <span>Musical</span>
+            </label>
+            <label class="intel-option" tabindex="0">
+                <input type="checkbox" name="intelligence" value="interpessoal" aria-label="Selecionar inteligência interpessoal">
+                <img src="icon-interpessoal.png" alt="Ícone representando a inteligência interpessoal (mãos se cumprimentando)" class="intel-icon">
+                <span>Interpessoal</span>
+            </label>
+            <label class="intel-option" tabindex="0">
+                <input type="checkbox" name="intelligence" value="intrapessoal" aria-label="Selecionar inteligência intrapessoal">
+                <img src="icon-intrapessoal.png" alt="Ícone representando a inteligência intrapessoal (rosto pensante)" class="intel-icon">
+                <span>Intrapessoal</span>
+            </label>
+            <label class="intel-option" tabindex="0">
+                <input type="checkbox" name="intelligence" value="naturalista" aria-label="Selecionar inteligência naturalista">
+                <img src="icon-naturalista.png" alt="Ícone representando a inteligência naturalista (broto de planta)" class="intel-icon">
+                <span>Naturalista</span>
+            </label>
         </div>
-        <button onclick="showNFTSuggestions()" class="btn" aria-label="Mostrar dicas para criar meu NFT">🎨 Mostrar Dicas</button>
-        <ul class="inteligencias-list" id="nft-suggestions" aria-live="polite"></ul>
+        <button onclick="showNFTSuggestions()" class="btn" aria-label="Mostrar dicas para criar meu NFT" role="button">🎨 Mostrar Dicas</button>
+        <ul class="inteligencias-list" id="nft-suggestions" aria-live="polite" role="list"></ul>
         <div class="nav-buttons">
-            <a href="criar-nft.html" class="btn back-btn" role="button" tabindex="0">↩ Voltar</a>
+            <a href="index.html" class="btn back-btn" role="button" tabindex="0" aria-label="Voltar para a página inicial">↩ Voltar</a>
+            <a href="testador.html" class="file-label-custom hidden-buttons" role="button" tabindex="0" aria-label="Testar compatibilidade de arquivo para NFT" title="Teste aqui se já tem ou criou seu arquivo para verificar se é compatível como NFT">Testador de Arquivos</a>
+            <a href="tutoriais.html" class="btn hidden-buttons" role="button" tabindex="0" aria-label="Ir para o Passo 3">Passo 3</a>
         </div>
     </div>
     <script src="script.js"></script>
-</body>
+    <script>
+        function showNFTSuggestions() {
+            const selectedIntelligences = Array.from(document.querySelectorAll("input[name='intelligence']:checked")).map(cb => cb.value);
+            const suggestionsList = document.getElementById("nft-suggestions");
+            const hiddenButtons = document.querySelectorAll(".hidden-buttons");
+            
+            if (selectedIntelligences.length === 0) {
+                suggestionsList.innerHTML = "<li>Selecione pelo menos uma inteligência pra ver as dicas!</li>";
+                hiddenButtons.forEach(button => button.style.display = "none"); // Garante que fiquem ocultos
+                return;
+            }
+
+            let suggestionsHtml = "";
+            selectedIntelligences.forEach(type => {
+                suggestionsHtml += `<li><strong>${type}:</strong><ul>`;
+                if (type === "linguística") {
+                    suggestionsHtml += `<li>Poema Visual: Escreva um poema curto e transforme em arte digital com fontes criativas (Canva). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Poema Visual">Saiba Mais</a></li>` +
+                                       `<li>Conto Ilustrado: Crie uma micro-história com desenhos simples ou fotos (celular ou Paint). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Conto Ilustrado">Saiba Mais</a></li>` +
+                                       `<li>HQ Narrativa: Desenhe uma história em quadrinhos com diálogos impactantes (papel ou Canva). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre HQ Narrativa">Saiba Mais</a></li>` +
+                                       `<li>Spoken Word: Grave um poema falado com fundo musical pra virar um NFT sonoro (celular + app de edição). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Spoken Word">Saiba Mais</a></li>`;
+                } else if (type === "lógico-matemática") {
+                    suggestionsHtml += `<li>Arte Geométrica: Desenhe padrões simétricos ou fractais coloridos (Paint ou Canva). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Arte Geométrica">Saiba Mais</a></li>` +
+                                       `<li>Puzzle Interativo: Crie um quebra-cabeça digital que revele uma imagem (Photopea ou papel escaneado). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Puzzle Interativo">Saiba Mais</a></li>` +
+                                       `<li>Infográfico Animado: Faça um gráfico simples com movimento (Canva ou vídeo no celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Infográfico Animado">Saiba Mais</a></li>` +
+                                       `<li>Escultura Lógica: Monte uma estrutura 3D com formas encaixadas e fotografe (papel ou materiais reciclados). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Escultura Lógica">Saiba Mais</a></li>`;
+                } else if (type === "espacial") {
+                    suggestionsHtml += `<li>Ilustração Fantástica: Desenhe um cenário imaginário com detalhes únicos (Paint ou papel). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Ilustração Fantástica">Saiba Mais</a></li>` +
+                                       `<li>Miniatura 3D: Crie um modelo físico ou digital de um objeto surreal (argila ou TinkerCAD). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Miniatura 3D">Saiba Mais</a></li>` +
+                                       `<li>Mapa Artístico: Faça um mapa de um mundo fictício com cores vibrantes (Canva ou papel). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Mapa Artístico">Saiba Mais</a></li>` +
+                                       `<li>Colagem Visionária: Combine fotos e desenhos num design futurista (Canva ou celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Colagem Visionária">Saiba Mais</a></li>`;
+                } else if (type === "corporal-cinestésica") {
+                    suggestionsHtml += `<li>Dança Digital: Filme uma coreografia curta e edite com efeitos (celular + app de vídeo). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Dança Digital">Saiba Mais</a></li>` +
+                                       `<li>Escultura Viva: Modele uma forma com argila ou massa e fotografe em ângulos dinâmicos. <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Escultura Viva">Saiba Mais</a></li>` +
+                                       `<li>Performance em Stop-Motion: Crie uma sequência de fotos em movimento (celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Performance em Stop-Motion">Saiba Mais</a></li>` +
+                                       `<li>Arte Tátil: Faça um relevo com materiais reciclados e digitalize como NFT (papelão ou tecido). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Arte Tátil">Saiba Mais</a></li>`;
+                } else if (type === "musical") {
+                    suggestionsHtml += `<li>Batida Original: Crie um loop rítmico com sons do dia a dia (Audacity ou celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Batida Original">Saiba Mais</a></li>` +
+                                       `<li>Melodia Visual: Grave uma música e faça um vídeo com formas que dançam no ritmo (Canva + app de vídeo). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Melodia Visual">Saiba Mais</a></li>` +
+                                       `<li>Poesia Sonora: Combine poesia falada com camadas de sons ambientes (celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Poesia Sonora">Saiba Mais</a></li>` +
+                                       `<li>Paisagem Acústica: Monte uma trilha com sons da natureza ou cidade (gravador ou app). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Paisagem Acústica">Saiba Mais</a></li>`;
+                } else if (type === "interpessoal") {
+                    suggestionsHtml += `<li>Mural Coletivo: Crie uma arte digital ou física com amigos, cada um adicionando algo (Canva ou papel). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Mural Coletivo">Saiba Mais</a></li>` +
+                                       `<li>Narrativa em Camadas: Grave um vídeo ou áudio com várias vozes contando uma história (celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Narrativa em Camadas">Saiba Mais</a></li>` +
+                                       `<li>Galeria de Retratos: Desenhe ou fotografe expressões de pessoas próximas num collage (Paint ou Canva). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Galeria de Retratos">Saiba Mais</a></li>` +
+                                       `<li>Teatro Digital: Filme uma cena curta com amigos pra virar um NFT animado (celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Teatro Digital">Saiba Mais</a></li>`;
+                } else if (type === "intrapessoal") {
+                    suggestionsHtml += `<li>Autorretrato Emocional: Desenhe ou fotografe algo que revele um sentimento seu (Paint ou celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Autorretrato Emocional">Saiba Mais</a></li>` +
+                                       `<li>Diário em Camadas: Crie uma página com texto e imagens sobre seus pensamentos (Canva). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Diário em Camadas">Saiba Mais</a></li>` +
+                                       `<li>Mandala Digital: Desenhe uma mandala com cores que expressem você (Canva ou papel escaneado). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Mandala Digital">Saiba Mais</a></li>` +
+                                       `<li>Reflexão Animada: Faça um vídeo curto com texto ou voz sobre sua jornada (celular + app). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Reflexão Animada">Saiba Mais</a></li>`;
+                } else if (type === "naturalista") {
+                    suggestionsHtml += `<li>Paisagem Viva: Fotografe ou desenhe uma cena natural com um toque surreal (celular ou Paint). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Paisagem Viva">Saiba Mais</a></li>` +
+                                       `<li>Escultura Orgânica: Crie uma forma com elementos naturais (folhas, pedras) e fotografe. <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Escultura Orgânica">Saiba Mais</a></li>` +
+                                       `<li>Padrão Botânico: Desenhe repetições de folhas ou flores em estilo abstrato (Canva ou papel). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Padrão Botânico">Saiba Mais</a></li>` +
+                                       `<li>História da Natureza: Faça um stop-motion com elementos naturais (celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre História da Natureza">Saiba Mais</a></li>`;
+                }
+                suggestionsHtml += `</ul></li>`;
+            });
+            suggestionsList.innerHTML = suggestionsHtml;
+            hiddenButtons.forEach(button => button.style.display = "inline-block"); // Exibe os botões
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f1ae14520',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

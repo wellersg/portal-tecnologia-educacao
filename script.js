@@ -59,8 +59,13 @@ function submitQuiz() {
         let selected = document.querySelector(`input[name="q${index}"]:checked`);
         if (selected) {
             userScores[q.type] += parseInt(selected.value);
+        } else {
+            console.warn(`Pergunta ${index + 1} não respondida. Atribuindo 0.`);
+            userScores[q.type] += 0; // Garante que todas as inteligências tenham um valor
         }
     });
+
+    console.log("Scores calculados:", userScores); // Depuração dos scores
 
     localStorage.setItem('userScores', JSON.stringify(userScores));
 
@@ -83,13 +88,38 @@ function submitQuiz() {
             }]
         },
         options: {
-            scales: { y: { beginAtZero: true, max: 20 } }
+            responsive: true,
+            maintainAspectRatio: false,
+            aspectRatio: 2, // Proporção ajustada para manter o gráfico compacto
+            scales: { 
+                y: { 
+                    beginAtZero: true, 
+                    max: 20,
+                    ticks: { font: { size: 10 } }
+                },
+                x: { 
+                    ticks: { font: { size: 10 }, maxRotation: 45, minRotation: 45 }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // Remove a legenda para economizar espaço
+                }
+            },
+            layout: {
+                padding: {
+                    left: 5,
+                    right: 5,
+                    top: 5,
+                    bottom: 5
+                }
+            }
         }
     });
 
     let resultText = "<h3>Parabéns, Explorador!</h3><p>Veja como suas habilidades se destacam:</p>";
     for (let type in userScores) {
-        if (userScores[type] >= 15) {
+        if (userScores[type] >= 10) { // Ajustado para 10 como teste
             resultText += `<p><strong>${type} (${userScores[type]}/20):</strong><br>`;
             if (type === "linguística") {
                 resultText += "Você tem uma habilidade especial para expressar ideias e usar palavras! Experimente criar histórias ou poemas que inspirem.<br>" +
@@ -143,7 +173,8 @@ function submitQuiz() {
             resultText += "</p>";
         }
     }
-    document.getElementById("quiz-result").innerHTML = resultText;
+    document.getElementById("quiz-result").innerHTML = resultText || "<p>Erro ao calcular os resultados. Tente novamente!</p>";
+    console.log("Result text generated:", resultText); // Depuração do texto do resultado
 }
 
 function shareResults() {
@@ -187,7 +218,12 @@ function checkFile() {
         return;
     }
 
-    fileFeedback.innerText = `Arquivo ok pra mintar! (${file.name}, ${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+    if (isNaN(file.size)) {
+        fileFeedback.innerText = `Erro ao calcular o tamanho do arquivo!`;
+        return;
+    }
+    const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+    fileFeedback.innerText = `Arquivo ok pra mintar! (${file.name}, ${sizeMB} MB)`;
 }
 
 function loadIntelligenceSelection() {
@@ -196,7 +232,7 @@ function loadIntelligenceSelection() {
 
     let selectionHtml = "";
     for (let type in userScores) {
-        if (userScores[type] >= 15) {
+        if (userScores[type] >= 10) {
             selectionHtml += `<label><input type="checkbox" name="intelligence" value="${type}"> ${type} (${userScores[type]}/20)</label>`;
         }
     }
@@ -263,4 +299,16 @@ function showNFTSuggestions() {
 
 if (document.getElementById("intelligence-selection") && window.location.pathname.includes("criar-nft.html")) {
     loadIntelligenceSelection();
+}
+
+// Desativa temporariamente o script do Cloudflare para teste local
+if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+    console.log("Desativando script do Cloudflare para ambiente local.");
+    const scripts = document.getElementsByTagName('script');
+    for (let script of scripts) {
+        if (script.innerHTML.includes('__CF$cv$params')) {
+            script.remove();
+            break;
+        }
+    }
 }
