@@ -15,12 +15,12 @@
         <p>Descobriu suas forças no <a href="teste.html" aria-label="Ir para o Teste de Inteligências Múltiplas">Teste de Inteligências Múltiplas</a>? Escolha uma ou mais pra ver dicas incríveis!</p>
         <div class="intelligence-selection" id="intelligence-selection" role="radiogroup" aria-label="Selecione suas inteligências múltiplas">
             <label class="intel-option" tabindex="0">
-                <input type="checkbox" name="intelligence" value="linguística" aria-label="Selecionar inteligência linguística">
+                <input type="checkbox" name="intelligence" value="linguistica" aria-label="Selecionar inteligência linguística">
                 <img src="icon-linguistica.png" alt="Ícone representando a inteligência linguística (balão de fala)" class="intel-icon">
                 <span>Linguística</span>
             </label>
             <label class="intel-option" tabindex="0">
-                <input type="checkbox" name="intelligence" value="lógico-matemática" aria-label="Selecionar inteligência lógico-matemática">
+                <input type="checkbox" name="intelligence" value="logico-matematica" aria-label="Selecionar inteligência lógico-matemática">
                 <img src="icon-logica.png" alt="Ícone representando a inteligência lógico-matemática (ábaco)" class="intel-icon">
                 <span>Lógico-Matemática</span>
             </label>
@@ -72,19 +72,19 @@
             
             if (selectedIntelligences.length === 0) {
                 suggestionsList.innerHTML = "<li>Selecione pelo menos uma inteligência pra ver as dicas!</li>";
-                hiddenButtons.forEach(button => button.style.display = "none"); // Garante que fiquem ocultos
+                hiddenButtons.forEach(button => button.style.display = "none");
                 return;
             }
 
             let suggestionsHtml = "";
             selectedIntelligences.forEach(type => {
-                suggestionsHtml += `<li><strong>${type}:</strong><ul>`;
-                if (type === "linguística") {
+                suggestionsHtml += `<li><strong>${type.replace('logico-matematica', 'Lógico-Matemática').replace('linguistica', 'Linguística')}:</strong><ul>`;
+                if (type === "linguistica") {
                     suggestionsHtml += `<li>Poema Visual: Escreva um poema curto e transforme em arte digital com fontes criativas (Canva). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Poema Visual">Saiba Mais</a></li>` +
                                        `<li>Conto Ilustrado: Crie uma micro-história com desenhos simples ou fotos (celular ou Paint). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Conto Ilustrado">Saiba Mais</a></li>` +
                                        `<li>HQ Narrativa: Desenhe uma história em quadrinhos com diálogos impactantes (papel ou Canva). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre HQ Narrativa">Saiba Mais</a></li>` +
                                        `<li>Spoken Word: Grave um poema falado com fundo musical pra virar um NFT sonoro (celular + app de edição). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Spoken Word">Saiba Mais</a></li>`;
-                } else if (type === "lógico-matemática") {
+                } else if (type === "logico-matematica") {
                     suggestionsHtml += `<li>Arte Geométrica: Desenhe padrões simétricos ou fractais coloridos (Paint ou Canva). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Arte Geométrica">Saiba Mais</a></li>` +
                                        `<li>Puzzle Interativo: Crie um quebra-cabeça digital que revele uma imagem (Photopea ou papel escaneado). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Puzzle Interativo">Saiba Mais</a></li>` +
                                        `<li>Infográfico Animado: Faça um gráfico simples com movimento (Canva ou vídeo no celular). <a href="guias-criacao.html?intelligences=${selectedIntelligences.join(',')}" aria-label="Saiba mais sobre Infográfico Animado">Saiba Mais</a></li>` +
@@ -123,7 +123,7 @@
                 suggestionsHtml += `</ul></li>`;
             });
             suggestionsList.innerHTML = suggestionsHtml;
-            hiddenButtons.forEach(button => button.style.display = "inline-block"); // Exibe os botões
+            hiddenButtons.forEach(button => button.style.display = "inline-block");
         }
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f1ae14520',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>

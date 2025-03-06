@@ -3,68 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutoriais de Minting - Workshop</title>
+    <title>Tutoriais - Workshop</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1><img src="icon-video.png" alt="Ícone de vídeo" class="title-icon"> Tutoriais de Minting</h1>
+        <h1>Tutoriais</h1>
     </header>
-    <div class="container">
+    <div class="container" role="main" aria-label="Seção de tutoriais para criar NFTs">
         <h2>Passo a Passo pra Mintar seu NFT</h2>
         <p>Aprenda a transformar sua arte em NFT com Metamask e OpenSea!</p>
         <div class="tutorial-list">
             <div class="tutorial-item">
                 <h3>Configurando a Metamask</h3>
                 <p>Crie sua carteira digital pra entrar no mundo dos NFTs:</p>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/_UGLa6lLxrI" frameborder="0" allowfullscreen aria-label="Vídeo tutorial sobre configuração da Metamask"></iframe>
-                <div class="tutorial-description">
-                    <h4>Informações Importantes</h4>
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/_UGLa6lLxrI" title="Tutorial: Configurando a Metamask" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen aria-label="Vídeo de configuração da Metamask"></iframe>
+                <div class="tutorial-description" style="display: block;">
+                    <h4 aria-label="Descrição do Tutorial 1">Descrição do Tutorial 1</h4>
                     <p>Guarde em um local seguro sua frase-semente (12 palavras), de preferência fora do seu computador.</p>
                     <p>Adicione a Rede Polygon: (A rede Polygon oferece taxas de transação mais baratas para mintar NFTs.)</p>
-                    <ol>
-                        <li>Vá em "Redes" > "Add Network" e configure:</li>
-                        <ul>
-                            <li><strong>Nome:</strong> Polygon Mainnet</li>
-                            <li><strong>RPC URL:</strong> https://polygon-rpc.com/</li>
-                            <li><strong>Chain ID:</strong> 137</li>
-                            <li><strong>Símbolo:</strong> MATIC</li>
-                            <li><strong>Explorer:</strong> https://polygonscan.com/</li>
-                        </ul>
-                        <li>Salve e mude para a rede Polygon.</li>
-                    </ol>
-                    <button class="btn copy-btn" onclick="copyDescription()" aria-label="Copiar a descrição do tutorial">📋 Copiar Descrição</button>
-                    <div id="copyMessage" class="message" role="alert" aria-live="polite"></div>
+                    <p>Vá em "Redes" > "Add Network" e configure:</p>
+                    <ul>
+                        <li>Nome: Polygon Mainnet</li>
+                        <li>RPC URL: <a href="https://polygon-rpc.com/" target="_blank" aria-label="Link para RPC URL da rede Polygon">https://polygon-rpc.com/</a></li>
+                        <li>Chain ID: 137</li>
+                        <li>Símbolo: MATIC</li>
+                        <li>Explorer: <a href="https://polygonscan.com/" target="_blank" aria-label="Link para o explorador Polygon">https://polygonscan.com/</a></li>
+                    </ul>
+                    <p>Salve e mude para a rede Polygon.</p>
+                    <div class="button-group">
+                        <button class="copy-btn" onclick="copyTutorialLink('https://www.youtube.com/watch?v=_UGLa6lLxrI')" aria-label="Copiar link do vídeo da Metamask">📋 Copiar Descrição</button>
+                        <a href="tutoriais-texto.html" class="btn" role="button" tabindex="0" aria-label="Ver tutorial em formato de texto">📖 Ver em Texto</a>
+                    </div>
                 </div>
             </div>
             <div class="tutorial-item">
                 <h3>Mintando no OpenSea</h3>
                 <p>Suba sua arte pro OpenSea e transforme em NFT:</p>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/sample-opensea" frameborder="0" allowfullscreen aria-label="Vídeo tutorial sobre criação de NFT no OpenSea"></iframe>
+                <video controls width="100%" aria-label="Vídeo de minting no OpenSea">
+                    <source src="tutorial2.mp4" type="video/mp4">
+                    <track kind="captions" src="captions.vtt" srclang="pt" label="Legendas em português" default>
+                    Seu navegador não suporta o elemento de vídeo.
+                </video>
+                <div class="tutorial-description" style="display: block;">
+                    <h4 aria-label="Descrição do Tutorial 2">Descrição do Tutorial 2</h4>
+                    <p>[Espaço reservado - Cole as informações importantes aqui após produzir o vídeo.]</p>
+                    <div class="button-group">
+                        <button class="copy-btn" onclick="copyTutorialLink('tutorial2.mp4')" aria-label="Copiar link do vídeo do OpenSea">📋 Copiar Descrição</button>
+                        <a href="tutoriais-texto.html" class="btn" role="button" tabindex="0" aria-label="Ver tutorial em formato de texto">📖 Ver em Texto</a>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="nav-buttons">
-            <a href="index.html" class="btn back-btn" role="button" tabindex="0" aria-label="Voltar para a página inicial">↩ Voltar</a>
         </div>
     </div>
     <script src="script.js"></script>
     <script>
-        function copyDescription() {
-            const description = document.querySelector('.tutorial-description h4').textContent +
-                              "\n" + document.querySelector('.tutorial-description p:nth-child(2)').textContent +
-                              "\n" + document.querySelector('.tutorial-description p:nth-child(3)').textContent +
-                              "\n" + document.querySelector('.tutorial-description ol').innerText;
-            navigator.clipboard.writeText(description).then(() => {
-                const copyMessage = document.getElementById("copyMessage");
-                copyMessage.innerText = "Descrição copiada com sucesso!";
-                setTimeout(() => {
-                    copyMessage.innerText = "";
-                }, 2000); // Remove a mensagem após 2 segundos
+        function copyTutorialLink(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Link copiado para a área de transferência!');
             }).catch(err => {
-                console.error("Erro ao copiar:", err);
-                document.getElementById("copyMessage").innerText = "Erro ao copiar a descrição.";
+                console.error('Erro ao copiar o link: ', err);
             });
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f1ead6766',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f38abbcde',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
