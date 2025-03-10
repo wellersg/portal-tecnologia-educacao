@@ -44,5 +44,23 @@
             <a href="index.html" class="btn back-btn" role="button" tabindex="0" aria-label="Voltar para a página inicial">↩ Voltar</a>
         </div>
     </div>
+    <script src="script.js"></script>
+    <!-- Botão de Acessibilidade com Emoticon ♿ no canto superior direito -->
+    <button class="accessibility-btn" aria-label="Abrir menu de acessibilidade" onclick="toggleAccessibilityMenu()">♿</button>
+    <!-- Menu de Acessibilidade com Ativar/Desativar -->
+    <div class="accessibility-menu" id="accessibility-menu">
+        <ul>
+            <li><button onclick="toggleAccessibility('high-contrast', this)">Alto Contraste (Ativar/Desativar)</button></li>
+            <li><button onclick="toggleAccessibility('large-text', this)">Fonte Legível (Ativar/Desativar)</button></li>
+            <li><button onclick="increaseFontSize()">Aumentar Letra</button></li>
+            <li><button onclick="decreaseFontSize()">Diminuir Letra</button></li>
+            <li><button onclick="toggleAccessibility('distraction-free', this)">Tirar Distrações (Ativar/Desativar)</button></li>
+            <li><button onclick="toggleAccessibility('text-to-speech', this)">Leitura em Voz Alta (Ativar/Desativar)</button></li>
+        </ul>
+    </div>
+    <!-- Rodapé -->
+    <footer>
+        <p>Explore, crie e aprenda com o Workshop Tecnologia e Educação 5.0 – Conectando inovação e conhecimento! | Desenvolvido pela Equipe Santos | Contato: <a href="mailto:tecnologiaeeducacao@gmail.com">tecnologiaeeducacao@gmail.com</a></p>
+    </footer>
 </body>
 </html>

@@ -326,7 +326,7 @@ nav {
     display: none;
 }
 
-/* Responsividade */
+/* Responsividade existente */
 @media (max-width: 768px) {
     .intelligence-selection {
         grid-template-columns: 1fr;
@@ -390,10 +390,195 @@ nav {
     .intel-option span { font-size: 12px; }
 }
 
-.guide-section {
-    display: none;
+/* Nova regra adicionada para o banner em telas até 480px (alteração da primeira solução) */
+@media (max-width: 480px) {
+    .banner {
+        width: 100%; /* Garante que o banner ocupe 100% da largura */
+        height: auto; /* Ajusta a altura proporcionalmente */
+        max-height: 200px; /* Limita a altura máxima para evitar overflow */
+        object-fit: contain; /* Mantém a proporção da imagem */
+    }
 }
 
-.guide-section[aria-expanded="true"] {
-    display: block;
+/* Nova regra adicionada para telas até 320px (alteração da segunda solução para 250px) */
+@media (max-width: 320px) {
+    .banner {
+        width: 100%; /* Garante que o banner ocupe 100% da largura */
+        height: auto; /* Ajusta a altura proporcionalmente */
+        max-height: 150px; /* Reduz ainda mais a altura para telas muito pequenas */
+        object-fit: contain; /* Mantém a proporção */
+    }
+    .container {
+        padding: 5px; /* Reduz o padding para economizar espaço */
+        margin: 10px auto; /* Reduz a margem para telas pequenas */
+    }
+    h1 {
+        font-size: 1.5em; /* Reduz o tamanho do título */
+    }
+    nav {
+        gap: 5px; /* Reduz o espaço entre os botões */
+    }
+    .btn, .back-btn {
+        font-size: 0.9em; /* Reduz o tamanho dos botões */
+        padding: 6px 10px; /* Reduz o padding dos botões */
+    }
+}
+
+/* Ajuste adicional para garantir que o banner não desconfigure (alteração da primeira solução) */
+.banner {
+    width: 100%; /* Garante responsividade base */
+    height: auto; /* Ajusta altura automaticamente */
+    display: block; /* Remove espaçamentos indesejados */
+    margin: 0 auto; /* Centraliza o banner */
+}
+
+/* Novo estilo para a frase introdutória do botão "Ver em Texto" */
+.text-link-intro {
+    margin: 10px 0;
+    font-size: 1em;
+    color: #ecf0f1;
+    text-align: center;
+}
+
+.text-link {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Estilos para o botão de acessibilidade e menu */
+.accessibility-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: #c2410c;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(194, 65, 12, 0.4);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    z-index: 1000;
+    font-size: 1.5em;
+    color: #ffffff;
+}
+
+.accessibility-btn:hover, .accessibility-btn:focus {
+    background: #ea580c;
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(234, 88, 12, 0.6);
+    outline: 2px solid #ffffff;
+}
+
+.accessibility-btn:focus {
+    outline: 3px solid #ffffff;
+}
+
+.accessibility-menu {
+    display: none;
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: rgba(45, 45, 68, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.accessibility-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.accessibility-menu li {
+    margin: 5px 0;
+}
+
+.accessibility-menu button {
+    background: #5b21b6;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1em;
+}
+
+.accessibility-menu button:hover {
+    background: #7c3aed;
+}
+
+.accessibility-menu button:focus {
+    outline: 2px solid #ffffff;
+}
+
+.high-contrast body {
+    background: #000000;
+    color: #ffffff;
+}
+
+.high-contrast .container {
+    background: rgba(30, 41, 59, 1);
+}
+
+.high-contrast .btn, .high-contrast .back-btn, .high-contrast .accessibility-btn {
+    background: #ff4500;
+}
+
+.high-contrast .btn:hover, .high-contrast .back-btn:hover, .high-contrast .accessibility-btn:hover {
+    background: #ff6347;
+}
+
+.large-text body {
+    font-size: 1.2em;
+}
+
+.distraction-free .banner {
+    display: none !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: rgba(45, 45, 68, 0.9);
+    margin-top: auto;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #c2410c;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #ea580c;
+}
+
+/* Responsividade ajustada para manter o botão no canto superior direito */
+@media (max-width: 600px) {
+    .accessibility-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+        top: 10px;
+        right: 10px;
+    }
+    .accessibility-menu {
+        top: 60px;
+        right: 10px;
+        max-width: 200px;
+    }
 }

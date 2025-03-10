@@ -32,9 +32,12 @@
                     </ul>
                     <p>Salve e mude para a rede Polygon.</p>
                     <div class="button-group">
-                        <button class="copy-btn" onclick="copyTutorialLink('https://www.youtube.com/watch?v=_UGLa6lLxrI')" aria-label="Copiar link do vídeo da Metamask">📋 Copiar Descrição</button>
-                        <a href="tutoriais-texto.html" class="btn" role="button" tabindex="0" aria-label="Ver tutorial em formato de texto">📖 Ver em Texto</a>
+                        <button class="copy-btn" onclick="copyDescription(this)" aria-label="Copiar descrição do tutorial da Metamask">📋 Copiar Descrição</button>
                     </div>
+                </div>
+                <div class="text-link">
+                    <p class="text-link-intro">Clique no botão abaixo para acessar este tutorial em formato de texto:</p>
+                    <a href="tutoriais-texto.html#tutorial1" class="btn" role="button" tabindex="0" aria-label="Ver tutorial em formato de texto">📖 Ver em Texto</a>
                 </div>
             </div>
             <div class="tutorial-item">
@@ -49,22 +52,49 @@
                     <h4 aria-label="Descrição do Tutorial 2">Descrição do Tutorial 2</h4>
                     <p>[Espaço reservado - Cole as informações importantes aqui após produzir o vídeo.]</p>
                     <div class="button-group">
-                        <button class="copy-btn" onclick="copyTutorialLink('tutorial2.mp4')" aria-label="Copiar link do vídeo do OpenSea">📋 Copiar Descrição</button>
-                        <a href="tutoriais-texto.html" class="btn" role="button" tabindex="0" aria-label="Ver tutorial em formato de texto">📖 Ver em Texto</a>
+                        <button class="copy-btn" onclick="copyDescription(this)" aria-label="Copiar descrição do tutorial do OpenSea">📋 Copiar Descrição</button>
                     </div>
                 </div>
+                <div class="text-link">
+                    <p class="text-link-intro">Clique no botão abaixo para acessar este tutorial em formato de texto:</p>
+                    <a href="tutoriais-texto.html#tutorial2" class="btn" role="button" tabindex="0" aria-label="Ver tutorial em formato de texto">📖 Ver em Texto</a>
+                </div>
             </div>
+        </div>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn back-btn" role="button" tabindex="0" aria-label="Voltar para a página inicial">↩ Voltar</a>
+            <a href="index.html" class="btn back-btn" role="button" tabindex="0" aria-label="Voltar para página anterior">⬅ Voltar para página anterior</a>
         </div>
     </div>
     <script src="script.js"></script>
     <script>
-        function copyTutorialLink(url) {
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Link copiado para a área de transferência!');
+        // Função ajustada para copiar a descrição do elemento associado
+        function copyDescription(button) {
+            const description = button.parentElement.parentElement.querySelector('p:not(.text-link-intro)').innerText;
+            navigator.clipboard.writeText(description).then(() => {
+                alert('Descrição copiada para a área de transferência!');
             }).catch(err => {
-                console.error('Erro ao copiar o link: ', err);
+                console.error('Erro ao copiar a descrição: ', err);
             });
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f38abbcde',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f38abbcde',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <!-- Botão de Acessibilidade com Emoticon ♿ no canto superior direito -->
+    <button class="accessibility-btn" aria-label="Abrir menu de acessibilidade" onclick="toggleAccessibilityMenu()">♿</button>
+    <!-- Menu de Acessibilidade com Ativar/Desativar -->
+    <div class="accessibility-menu" id="accessibility-menu">
+        <ul>
+            <li><button onclick="toggleAccessibility('high-contrast', this)">Alto Contraste (Ativar/Desativar)</button></li>
+            <li><button onclick="toggleAccessibility('large-text', this)">Fonte Legível (Ativar/Desativar)</button></li>
+            <li><button onclick="increaseFontSize()">Aumentar Letra</button></li>
+            <li><button onclick="decreaseFontSize()">Diminuir Letra</button></li>
+            <li><button onclick="toggleAccessibility('distraction-free', this)">Tirar Distrações (Ativar/Desativar)</button></li>
+            <li><button onclick="toggleAccessibility('text-to-speech', this)">Leitura em Voz Alta (Ativar/Desativar)</button></li>
+        </ul>
+    </div>
+    <!-- Rodapé -->
+    <footer>
+        <p>Explore, crie e aprenda com o Workshop Tecnologia e Educação 5.0 – Conectando inovação e conhecimento! | Desenvolvido pela Equipe Santos | Contato: <a href="mailto:tecnologiaeeducacao@gmail.com">tecnologiaeeducacao@gmail.com</a></p>
+    </footer>
+</body>
 </html>

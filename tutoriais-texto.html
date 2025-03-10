@@ -13,7 +13,7 @@
     <div class="container">
         <p>Aqui estão os tutoriais em formato de texto para criar seus NFTs. Ideal para quem prefere ler!</p>
 
-        <h2>Tutorial 1: Configurando a Metamask - Crie sua carteira digital para entrar no mundo dos NFTs</h2>
+        <h2 id="tutorial1">Tutorial 1: Configurando a Metamask - Crie sua carteira digital para entrar no mundo dos NFTs</h2>
         <div class="tutorial-item">
             <p>Passo a passo para configurar sua carteira Metamask e adicionar a rede Polygon:</p>
             <div class="info-box">
@@ -67,7 +67,7 @@
             </ol>
         </div>
 
-        <h2>Tutorial 2: Mintando no OpenSea - Suba sua arte e transforme em NFT</h2>
+        <h2 id="tutorial2">Tutorial 2: Mintando no OpenSea - Suba sua arte e transforme em NFT</h2>
         <div class="tutorial-item">
             <p>Passo a passo para mintar sua arte no OpenSea:</p>
             <div class="info-box">
@@ -118,5 +118,23 @@
         </div>
     </div>
     <script src="script.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f38abbcde',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91b7122f38abbcde',t:'MTc0MTE1MTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <!-- Botão de Acessibilidade com Emoticon ♿ no canto superior direito -->
+    <button class="accessibility-btn" aria-label="Abrir menu de acessibilidade" onclick="toggleAccessibilityMenu()">♿</button>
+    <!-- Menu de Acessibilidade com Ativar/Desativar -->
+    <div class="accessibility-menu" id="accessibility-menu">
+        <ul>
+            <li><button onclick="toggleAccessibility('high-contrast', this)">Alto Contraste (Ativar/Desativar)</button></li>
+            <li><button onclick="toggleAccessibility('large-text', this)">Fonte Legível (Ativar/Desativar)</button></li>
+            <li><button onclick="increaseFontSize()">Aumentar Letra</button></li>
+            <li><button onclick="decreaseFontSize()">Diminuir Letra</button></li>
+            <li><button onclick="toggleAccessibility('distraction-free', this)">Tirar Distrações (Ativar/Desativar)</button></li>
+            <li><button onclick="toggleAccessibility('text-to-speech', this)">Leitura em Voz Alta (Ativar/Desativar)</button></li>
+        </ul>
+    </div>
+    <!-- Rodapé -->
+    <footer>
+        <p>Explore, crie e aprenda com o Workshop Tecnologia e Educação 5.0 – Conectando inovação e conhecimento! | Desenvolvido pela Equipe Santos | Contato: <a href="mailto:tecnologiaeeducacao@gmail.com">tecnologiaeeducacao@gmail.com</a></p>
+    </footer>
+</body>
 </html>

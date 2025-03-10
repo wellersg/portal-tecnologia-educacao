@@ -35,6 +35,12 @@ const questions = [
 
 let chartInstance = null;
 let userScores = JSON.parse(localStorage.getItem('userScores')) || {};
+let accessibilityStates = {
+    'high-contrast': false,
+    'large-text': false,
+    'distraction-free': false,
+    'text-to-speech': false
+};
 
 function startQuiz() {
     document.getElementById("intro").style.display = "none";
@@ -42,8 +48,8 @@ function startQuiz() {
     let quizHtml = "";
     questions.forEach((q, index) => {
         quizHtml += `<p>${index + 1}. ${q.text}</p>` +
-                    `<label><input type="radio" name="q${index}" value="1"> Nunca</label>` +
-                    `<label><input type="radio" name="q${index}" value="3"> Às vezes</label>` +
+                    `<label><input type="radio" name="q${index}" value="0"> Nunca</label>` +
+                    `<label><input type="radio" name="q${index}" value="2.5"> Às vezes</label>` +
                     `<label><input type="radio" name="q${index}" value="5"> Sempre</label>` +
                     `<br><br>`;
     });
@@ -55,25 +61,38 @@ function submitQuiz() {
         "linguística": 0, "lógico-matemática": 0, "espacial": 0, "corporal-cinestésica": 0,
         "musical": 0, "interpessoal": 0, "intrapessoal": 0, "naturalista": 0
     };
+
+    // Calcula as pontuações
     questions.forEach((q, index) => {
         let selected = document.querySelector(`input[name="q${index}"]:checked`);
         if (selected) {
-            userScores[q.type] += parseInt(selected.value);
+            userScores[q.type] += parseFloat(selected.value);
         } else {
             console.warn(`Pergunta ${index + 1} não respondida. Atribuindo 0.`);
-            userScores[q.type] += 0; // Garante que todas as inteligências tenham um valor
+            userScores[q.type] += 0;
         }
     });
 
-    console.log("Scores calculados:", userScores); // Depuração dos scores
+    // Arredonda as pontuações para cima
+    for (let type in userScores) {
+        userScores[type] = Math.ceil(userScores[type]);
+    }
+
+    console.log("Scores calculados (após arredondamento):", userScores);
 
     localStorage.setItem('userScores', JSON.stringify(userScores));
 
     document.getElementById("quiz-section").style.display = "none";
     document.getElementById("result-section").style.display = "block";
 
-    let labels = Object.keys(userScores);
-    let data = Object.values(userScores);
+    // Filtra e ordena as inteligências para o gráfico
+    let sortedScores = Object.entries(userScores)
+        .filter(([type, score]) => score >= 9) // Apenas para o gráfico, mostra >= 9
+        .sort((a, b) => b[1] - a[1]); // Ordem decrescente
+
+    let labels = sortedScores.map(([type, score]) => type);
+    let data = sortedScores.map(([type, score]) => score);
+
     if (chartInstance) chartInstance.destroy();
     chartInstance = new Chart(document.getElementById("resultsChart"), {
         type: "bar",
@@ -90,7 +109,7 @@ function submitQuiz() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            aspectRatio: 2, // Proporção ajustada para manter o gráfico compacto
+            aspectRatio: 2,
             scales: { 
                 y: { 
                     beginAtZero: true, 
@@ -103,7 +122,7 @@ function submitQuiz() {
             },
             plugins: {
                 legend: {
-                    display: false // Remove a legenda para economizar espaço
+                    display: false
                 }
             },
             layout: {
@@ -117,64 +136,109 @@ function submitQuiz() {
         }
     });
 
-    let resultText = "<h3>Parabéns, Explorador!</h3><p>Veja como suas habilidades se destacam:</p>";
-    for (let type in userScores) {
-        if (userScores[type] >= 10) { // Ajustado para 10 como teste
-            resultText += `<p><strong>${type} (${userScores[type]}/20):</strong><br>`;
-            if (type === "linguística") {
-                resultText += "Você tem uma habilidade especial para expressar ideias e usar palavras! Experimente criar histórias ou poemas que inspirem.<br>" +
-                              "No dia a dia, tente escrever um diário ou conversar com amigos para desenvolver essa capacidade.<br>" +
-                              "Se quiser estudar mais, áreas como Letras ou Comunicação podem te interessar.<br>" +
-                              "E, se for seu caminho, profissões como escritor ou professor podem ser ótimas escolhas!<br>" +
-                              "Pra seu NFT, use isso pra criar um texto ou áudio incrível!";
-            } else if (type === "lógico-matemática") {
-                resultText += "Sua mente lógica é excelente para resolver problemas! Explore isso com jogos ou desafios que estimulem o raciocínio.<br>" +
-                              "No dia a dia, experimente planejar atividades ou analisar situações com cuidado.<br>" +
-                              "Cursos como Matemática ou Ciências Exatas podem abrir novas possibilidades.<br>" +
-                              "Se te interessar, profissões como cientista ou engenheiro podem combinar com você!<br>" +
-                              "Use essa lógica pra criar um NFT com padrões ou designs únicos!";
-            } else if (type === "espacial") {
-                resultText += "Você tem um talento especial para visualizar e criar! Use sua imaginação para fazer desenhos ou imaginar cenários.<br>" +
-                              "No dia a dia, tente criar mapas, montar objetos ou decorar algo ao seu redor.<br>" +
-                              "Estudos em Design ou Arquitetura podem ser um espaço para explorar.<br>" +
-                              "E, se for seu caminho, profissões como artista ou designer podem ser seu futuro!<br>" +
-                              "Crie um NFT visual que impressione!";
-            } else if (type === "corporal-cinestésica") {
-                resultText += "Seu corpo é sua força – você aprende melhor em movimento! Experimente dançar, praticar esportes ou criar com as mãos.<br>" +
-                              "No dia a dia, tente cozinhar ou construir algo para usar essa energia.<br>" +
-                              "Cursos como Educação Física ou Artesanato podem te ajudar a crescer.<br>" +
-                              "Se te atrair, profissões como atleta ou artesão podem ser perfeitas!<br>" +
-                              "Seu NFT pode ser algo físico digitalizado, como uma dança!";
-            } else if (type === "musical") {
-                resultText += "Você tem uma conexão especial com sons! Experimente tocar, cantar ou criar músicas que mostrem quem você é.<br>" +
-                              "No dia a dia, ouça diferentes sons ou crie ritmos para explorar essa habilidade.<br>" +
-                              "Estudos em Música ou Artes podem te levar mais longe.<br>" +
-                              "E, se quiser, ser músico ou professor de música pode ser uma boa escolha!<br>" +
-                              "Que tal um NFT com uma batida original sua?";
-            } else if (type === "interpessoal") {
-                resultText += "Você tem um talento especial para entender pessoas! Use isso para criar laços e ajudar quem está ao seu redor.<br>" +
-                              "No dia a dia, experimente apoiar amigos ou trabalhar em grupo para fortalecer essa habilidade.<br>" +
-                              "Cursos como Psicologia ou Comunicação podem te interessar.<br>" +
-                              "Se for seu caminho, profissões como mediador ou líder podem surgir daí!<br>" +
-                              "Crie um NFT colaborativo com amigos!";
-            } else if (type === "intrapessoal") {
-                resultText += "Você tem uma habilidade especial para se entender! Reflita sobre seus sentimentos e sonhos para se conhecer ainda mais.<br>" +
-                              "No dia a dia, tente escrever suas ideias ou pensar em silêncio para explorar essa capacidade.<br>" +
-                              "Estudos em Filosofia ou Psicologia podem te ajudar a avançar.<br>" +
-                              "E, se te atrair, profissões como escritor ou terapeuta podem ser ideais!<br>" +
-                              "Seu NFT pode ser algo bem pessoal e único!";
-            } else if (type === "naturalista") {
-                resultText += "Você tem uma conexão especial com a natureza! Explore o mundo ao seu redor observando padrões e detalhes.<br>" +
-                              "No dia a dia, tente observar plantas, animais ou organizar coleções para usar essa habilidade.<br>" +
-                              "Cursos como Biologia ou Ciências Ambientais podem te conectar mais.<br>" +
-                              "Se quiser, profissões como ecologista ou pesquisador podem ser seu futuro!<br>" +
-                              "Use a natureza como inspiração pro seu NFT!";
-            }
+    // Ordena todas as inteligências por pontuação (decrescente)
+    let allScores = Object.entries(userScores).sort((a, b) => b[1] - a[1]);
+
+    // Separa inteligências com 20 pontos
+    let topScores = allScores.filter(([type, score]) => score === 20);
+    let mainScores = allScores.filter(([type, score]) => score >= 9 && score < 20);
+    let exploreScores = allScores.filter(([type, score]) => score > 0 && score < 9);
+
+    let resultText = "<h3>Parabéns, Explorador!</h3>";
+
+    // Se há inteligências com 20 pontos, destaca no topo
+    if (topScores.length > 0) {
+        resultText += `<p><strong>Fantástico! Estas são suas inteligências de maior impacto, a base para criar e inovar sem limites!</strong></p>`;
+        topScores.forEach(([type, score]) => {
+            resultText += `<p><strong>${type} (${score}/20):</strong><br>`;
+            resultText += getIntelligenceDescription(type);
             resultText += "</p>";
-        }
+        });
     }
+
+    // Inteligências principais (>= 9 e < 20)
+    if (mainScores.length > 0) {
+        if (topScores.length > 0) {
+            resultText += `<p><strong>Estas também são áreas onde você se destaca:</strong></p>`;
+        } else {
+            resultText += `<p><strong>Estas são suas inteligências mais fortes:</strong></p>`;
+        }
+        mainScores.forEach(([type, score]) => {
+            resultText += `<p><strong>${type} (${score}/20):</strong><br>`;
+            resultText += getIntelligenceDescription(type);
+            resultText += "</p>";
+        });
+    }
+
+    // Áreas para explorar (0 a 8 pontos)
+    if (exploreScores.length > 0) {
+        resultText += `<p><strong>Continue explorando! Estas inteligências também fazem parte do seu potencial e podem crescer ainda mais!</strong></p>`;
+        exploreScores.forEach(([type, score]) => {
+            resultText += `<p><strong>${type} (${score}/20):</strong><br>`;
+            resultText += getIntelligenceDescription(type);
+            resultText += "</p>";
+        });
+    }
+
+    // Nota sobre subjetividade
+    resultText += `<p><em>Nota: Este teste reflete sua percepção atual. Todas as inteligências podem ser desenvolvidas com prática!</em></p>`;
+
     document.getElementById("quiz-result").innerHTML = resultText || "<p>Erro ao calcular os resultados. Tente novamente!</p>";
-    console.log("Result text generated:", resultText); // Depuração do texto do resultado
+    console.log("Result text generated:", resultText);
+}
+
+// Função auxiliar para obter a descrição de cada inteligência
+function getIntelligenceDescription(type) {
+    if (type === "linguística") {
+        return "Você tem uma habilidade especial para expressar ideias e usar palavras! Experimente criar histórias ou poemas que inspirem.<br>" +
+               "No dia a dia, tente escrever um diário ou conversar com amigos para desenvolver essa capacidade.<br>" +
+               "Se quiser estudar mais, áreas como Letras ou Comunicação podem te interessar.<br>" +
+               "E, se for seu caminho, profissões como escritor ou professor podem ser ótimas escolhas!<br>" +
+               "Pra seu NFT, use isso pra criar um texto ou áudio incrível!";
+    } else if (type === "lógico-matemática") {
+        return "Sua mente lógica é excelente para resolver problemas! Explore isso com jogos ou desafios que estimulem o raciocínio.<br>" +
+               "No dia a dia, experimente planejar atividades ou analisar situações com cuidado.<br>" +
+               "Cursos como Matemática ou Ciências Exatas podem abrir novas possibilidades.<br>" +
+               "Se te interessar, profissões como cientista ou engenheiro podem combinar com você!<br>" +
+               "Use essa lógica pra criar um NFT com padrões ou designs únicos!";
+    } else if (type === "espacial") {
+        return "Você tem um talento especial para visualizar e criar! Use sua imaginação para fazer desenhos ou imaginar cenários.<br>" +
+               "No dia a dia, tente criar mapas, montar objetos ou decorar algo ao seu redor.<br>" +
+               "Estudos em Design ou Arquitetura podem ser um espaço para explorar.<br>" +
+               "E, se for seu caminho, profissões como artista ou designer podem ser seu futuro!<br>" +
+               "Crie um NFT visual que impressione!";
+    } else if (type === "corporal-cinestésica") {
+        return "Seu corpo é sua força – você aprende melhor em movimento! Experimente dançar, praticar esportes ou criar com as mãos.<br>" +
+               "No dia a dia, tente cozinhar ou construir algo para usar essa energia.<br>" +
+               "Cursos como Educação Física ou Artesanato podem te ajudar a crescer.<br>" +
+               "Se te atrair, profissões como atleta ou artesão podem ser perfeitas!<br>" +
+               "Seu NFT pode ser algo físico digitalizado, como uma dança!";
+    } else if (type === "musical") {
+        return "Você tem uma conexão especial com sons! Experimente tocar, cantar ou criar músicas que mostrem quem você é.<br>" +
+               "No dia a dia, ouça diferentes sons ou crie ritmos para explorar essa habilidade.<br>" +
+               "Estudos em Música ou Artes podem te levar mais longe.<br>" +
+               "E, se quiser, ser músico ou professor de música pode ser uma boa escolha!<br>" +
+               "Que tal um NFT com uma batida original sua?";
+    } else if (type === "interpessoal") {
+        return "Você tem um talento especial para entender pessoas! Use isso para criar laços e ajudar quem está ao seu redor.<br>" +
+               "No dia a dia, experimente apoiar amigos ou trabalhar em grupo para fortalecer essa habilidade.<br>" +
+               "Cursos como Psicologia ou Comunicação podem te interessar.<br>" +
+               "Se for seu caminho, profissões como mediador ou líder podem surgir daí!<br>" +
+               "Crie um NFT colaborativo com amigos!";
+    } else if (type === "intrapessoal") {
+        return "Você tem uma habilidade especial para se entender! Reflita sobre seus sentimentos e sonhos para se conhecer ainda mais.<br>" +
+               "No dia a dia, tente escrever suas ideias ou pensar em silêncio para explorar essa capacidade.<br>" +
+               "Estudos em Filosofia ou Psicologia podem te ajudar a avançar.<br>" +
+               "E, se te atrair, profissões como escritor ou terapeuta podem ser ideais!<br>" +
+               "Seu NFT pode ser algo bem pessoal e único!";
+    } else if (type === "naturalista") {
+        return "Você tem uma conexão especial com a natureza! Explore o mundo ao seu redor observando padrões e detalhes.<br>" +
+               "No dia a dia, tente observar plantas, animais ou organizar coleções para usar essa habilidade.<br>" +
+               "Cursos como Biologia ou Ciências Ambientais podem te conectar mais.<br>" +
+               "Se quiser, profissões como ecologista ou pesquisador podem ser seu futuro!<br>" +
+               "Use a natureza como inspiração pro seu NFT!";
+    }
+    return "";
 }
 
 function shareResults() {
@@ -310,5 +374,67 @@ if (window.location.hostname === "127.0.0.1" || window.location.hostname === "lo
             script.remove();
             break;
         }
+    }
+}
+
+// Nova função para copiar a descrição do tutorial
+function copyDescription(button) {
+    // Encontra o elemento pai .tutorial-description
+    const tutorialDescription = button.closest('.tutorial-description');
+    // Pega apenas o texto dos parágrafos (<p>) e listas (<ul>)
+    const descriptionElements = tutorialDescription.querySelectorAll('p, ul');
+    const descriptionText = Array.from(descriptionElements)
+        .map(element => element.innerText.trim())
+        .join('\n\n');
+
+    // Usa a API de Clipboard para copiar o texto
+    navigator.clipboard.writeText(descriptionText).then(() => {
+        alert('Descrição copiada com sucesso!');
+    }).catch(err => {
+        console.error('Erro ao copiar a descrição:', err);
+        alert('Erro ao copiar a descrição. Tente novamente.');
+    });
+}
+
+// Função para alternar o menu de acessibilidade
+function toggleAccessibilityMenu() {
+    const menu = document.getElementById('accessibility-menu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+// Função para gerenciar as opções de acessibilidade com Ativar/Desativar
+function toggleAccessibility(feature, button) {
+    accessibilityStates[feature] = !accessibilityStates[feature];
+    const state = accessibilityStates[feature];
+    button.textContent = `${button.textContent.split(' (')[0]} (${state ? 'Desativar' : 'Ativar'})`;
+
+    if (feature === 'high-contrast') {
+        document.body.classList.toggle('high-contrast', state);
+    } else if (feature === 'large-text') {
+        document.body.classList.toggle('large-text', state);
+    } else if (feature === 'distraction-free') {
+        document.querySelectorAll('.banner').forEach(el => el.classList.toggle('hidden', state));
+    } else if (feature === 'text-to-speech') {
+        if (state && 'speechSynthesis' in window) {
+            const text = document.body.innerText;
+            const utterance = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(utterance);
+        } else if (!state) {
+            window.speechSynthesis.cancel();
+        }
+    }
+}
+
+// Função para aumentar o tamanho da fonte
+function increaseFontSize() {
+    let currentSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+    document.body.style.fontSize = (currentSize + 2) + 'px';
+}
+
+// Função para diminuir o tamanho da fonte
+function decreaseFontSize() {
+    let currentSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+    if (currentSize > 16) { // Limite mínimo de 16px (tamanho base)
+        document.body.style.fontSize = (currentSize - 2) + 'px';
     }
 }
